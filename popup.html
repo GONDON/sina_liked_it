@@ -1,7 +1,7 @@
 <!--
  * @LastEditors: jizai jizai.zhu@tuya.com
  * @Date: 2024-12-24 15:09:26
- * @LastEditTime: 2024-12-24 17:53:27
+ * @LastEditTime: 2024-12-24 18:50:51
  * @FilePath: /sina_liked_it/popup.html
  * @Description: 
 -->
@@ -131,8 +131,12 @@
 
     /* 进度条容器 */
     .progress-container {
-      margin: 8px 0;
+      margin: 0 0 16px 0;
       display: none;
+      background-color: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
     }
 
     .progress-container.visible {
@@ -251,6 +255,15 @@
 </head>
 <body>
   <div class="container">
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar">
+        <div class="progress-value" id="progressValue"></div>
+      </div>
+      <div class="progress-text" id="progressText">
+        点赞进度: <span id="progressCount">0</span>/<span id="progressTotal">50</span>
+      </div>
+    </div>
+
     <div class="title">
       <span class="material-symbols-outlined icon">thumb_up</span>
       微博点赞助手
@@ -283,14 +296,6 @@
       <span class="material-symbols-outlined">stop_circle</span>
       停止点赞
     </button>
-
-    <!-- 进度条 -->
-    <div class="progress-container" id="progressContainer">
-      <div class="progress-bar">
-        <div class="progress-value" id="progressValue"></div>
-      </div>
-      <div class="progress-text" id="progressText">已完成: 0/50</div>
-    </div>
 
     <div class="divider"></div>
     
