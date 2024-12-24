@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "微博自动点赞",
+  "version": "1.0",
+  "description": "自动给新浪微博点赞的Chrome扩展",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://weibo.com/*",
+    "https://*.weibo.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://weibo.com/*",
+        "https://*.weibo.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content.js"
+      ],
+      "matches": [
+        "https://*.weibo.com/*"
+      ]
+    }
+  ]
+}
