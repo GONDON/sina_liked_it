@@ -3,11 +3,6 @@
   "name": "微博自动点赞",
   "version": "1.0",
   "description": "自动给新浪微博点赞的Chrome扩展",
-  "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  },
   "permissions": [
     "storage",
     "tabs",
@@ -19,12 +14,7 @@
     "https://*.weibo.com/*"
   ],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
-    }
+    "default_popup": "popup.html"
   },
   "content_scripts": [
     {
