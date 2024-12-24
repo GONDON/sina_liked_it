@@ -1,22 +1,313 @@
+<!--
+ * @LastEditors: jizai jizai.zhu@tuya.com
+ * @Date: 2024-12-24 15:09:26
+ * @LastEditTime: 2024-12-24 17:53:27
+ * @FilePath: /sina_liked_it/popup.html
+ * @Description: 
+-->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      width: 200px;
-      padding: 10px;
+      width: 320px;
+      padding: 16px;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
     }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .title {
+      color: #202124;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title .icon {
+      color: #1a73e8;
+      font-size: 24px;
+    }
+
     button {
-      width: 100%;
-      margin: 5px 0;
-      padding: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: white;
+      color: #202124;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    button:hover {
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    button:active {
+      background-color: #f1f3f4;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    button.primary {
+      background-color: #1a73e8;
+      color: white;
+    }
+
+    button.primary:hover {
+      background-color: #1557b0;
+    }
+
+    button.primary:active {
+      background-color: #174ea6;
+    }
+
+    button.warning {
+      background-color: #ea4335;
+      color: white;
+    }
+
+    button.warning:hover {
+      background-color: #d93025;
+    }
+
+    button.warning:active {
+      background-color: #c5221f;
+    }
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #dadce0;
+      margin: 8px 0;
+    }
+
+    .status {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 16px;
+      text-align: center;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .status.active {
+      color: #1a73e8;
+      animation: pulse 2s infinite;
+    }
+
+    .status.error {
+      color: #ea4335;
+    }
+
+    /* 进度条容器 */
+    .progress-container {
+      margin: 8px 0;
+      display: none;
+    }
+
+    .progress-container.visible {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background-color: #e8f0fe;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-value {
+      width: 0%;
+      height: 100%;
+      background-color: #1a73e8;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    /* 设置面板 */
+    .settings {
+      background-color: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      display: none;
+    }
+
+    .settings.visible {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    .settings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .settings-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #202124;
+    }
+
+    .settings-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .settings-item label {
+      font-size: 14px;
+      color: #5f6368;
+    }
+
+    .settings-item input {
+      width: 60px;
+      padding: 4px 8px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    /* 动画效果 */
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 设置按钮 */
+    .settings-toggle {
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: #5f6368;
+      box-shadow: none;
+    }
+
+    .settings-toggle:hover {
+      color: #202124;
+      background: none;
+      box-shadow: none;
     }
   </style>
 </head>
 <body>
-  <button id="startLiking">开始点赞</button>
-  <button id="stopLiking">停止点赞</button>
+  <div class="container">
+    <div class="title">
+      <span class="material-symbols-outlined icon">thumb_up</span>
+      微博点赞助手
+      <button class="settings-toggle" id="settingsToggle">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+    </div>
+
+    <!-- 设置面板 -->
+    <div class="settings" id="settings">
+      <div class="settings-header">
+        <span class="settings-title">设置选项</span>
+      </div>
+      <div class="settings-item">
+        <label>最大点赞数量</label>
+        <input type="number" id="maxLikes" value="50" min="1" max="1000">
+      </div>
+      <div class="settings-item">
+        <label>操作间隔 (秒)</label>
+        <input type="number" id="interval" value="2" min="1" max="60">
+      </div>
+    </div>
+    
+    <button id="startLiking" class="primary">
+      <span class="material-symbols-outlined">favorite</span>
+      开始点赞
+    </button>
+    
+    <button id="stopLiking">
+      <span class="material-symbols-outlined">stop_circle</span>
+      停止点赞
+    </button>
+
+    <!-- 进度条 -->
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar">
+        <div class="progress-value" id="progressValue"></div>
+      </div>
+      <div class="progress-text" id="progressText">已完成: 0/50</div>
+    </div>
+
+    <div class="divider"></div>
+    
+    <button id="startUnliking" class="warning">
+      <span class="material-symbols-outlined">thumb_down</span>
+      取消点赞
+    </button>
+
+    <button id="stopUnliking">
+      <span class="material-symbols-outlined">stop_circle</span>
+      停止取消点赞
+    </button>
+
+    <div class="status" id="status">
+      准备就绪
+    </div>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html> 
